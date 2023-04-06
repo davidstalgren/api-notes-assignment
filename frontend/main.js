@@ -1,7 +1,7 @@
 console.log('hello world');
 
 tinymce.init({
-    selector: "#textContent",
+    selector: "#noteContent",
     plugins: 'code',
     toolbar: 'undo redo | forecolor backcolor | formatselect bold italic underline strikethrough | alignleft alignright | code',
 
@@ -13,12 +13,32 @@ tinymce.init({
 })
 
 
-let textContent = document.getElementById('textContent');
-let textResult = document.getElementById('textResult');
+let noteHeading = document.getElementById('noteHeading');
+let noteDescription = document.getElementById('noteDescription');
+let noteContent = document.getElementById('noteContent');
+let noteResult = document.getElementById('noteResult');
 
 
-document.getElementById('saveBtn').addEventListener('click', function(){
-    console.log(textContent.value);
+document.getElementById('saveNoteBtn').addEventListener('click', addNote)
 
-    textResult.innerHTML = textContent.value;
-})
+function addNote() {
+    console.log('click', noteContent.value);
+    noteResult.innerHTML = noteContent.value;
+
+    fetch('http://localhost:3000/notes', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            newNoteHeading: noteHeading.value,
+            newNoteDescription: noteDescription.value,
+            newNoteContent: noteContent.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('create note', data);
+    })
+
+}

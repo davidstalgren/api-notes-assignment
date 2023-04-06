@@ -8,12 +8,14 @@
     <title>Notes-davidstalgren</title>
 </head>
 <body>
-    <h1>Hello world</h1>
-    
-    <textarea id="textContent"></textarea>
-    <button id="saveBtn">Spara</button>
-
-    <div id="textResult"></div>
+    <h1>DavvEs Notes</h1>
+    <div id="noteForm">
+        <span>Heading:</span><input type="text" id="noteHeading"><br>
+        <span>Description:</span><input type="text" id="noteDescription"><br>
+        <span>Content:</span><textarea id="noteContent"></textarea>
+        <button id="saveNoteBtn">Spara</button>
+    </div>
+    <div id="noteResult"></div>
 
     <script src="node_modules/tinymce/tinymce.min.js"></script>
     <script src="main.js" type="module" defer></script>
