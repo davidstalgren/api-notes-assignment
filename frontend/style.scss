@@ -1,5 +1,54 @@
+@use 'variables' as var;
+
+@import 'normalize';
+
 body {
-    background-color: #222222;
-    color: #F2F2F2;
+    background-color: var.$almostBlack;
+    color: var.$offWhite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+#noteForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.noteWrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.noteCard {
+    background-color: var.$offWhite;
+    color: var.$almostBlack;
+    padding: 1rem;
+    padding-left: 5rem;
+    margin: 2rem;
+    border-top-right-radius: 5rem;
+    border-bottom-right-radius: 5rem;
+    border-bottom-left-radius: 5rem;
+    width: 350px;
+
+    .noteHeading {
+        margin-bottom: 0px;
+    }
+
+    .noteCreateDate {
+        font-size: 0.8rem;
+    }
+
+    .noteDescription {
+        
+    }
+
+    .noteContent {
+        
+    }
+
+    .hiddenContent {
+        display: none;
+    }
+}
