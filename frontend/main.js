@@ -51,18 +51,34 @@ function printNotesList() {
     .then(data => {
         console.log('notes from DB', data);
 
-        let ul = document.createElement('ul');
-
+        let noteWrapper = document.createElement('div');
+        noteWrapper.classList.add('noteCardWrapper');
+        
         data.map(note => {
-            let li = document.createElement('li');
-            li.innerText = `${note.noteHeading} - was created at ${note.createDate} ${note.noteDescription} ${note.noteContent}`;
 
-            ul.appendChild(li);
+            let noteCard = document.createElement('div');
+            noteCard.classList.add('noteCard');
+        
+            noteCard.innerHTML = `
+
+            <h2 class="noteHeading">${note.noteHeading}</h2>
+
+            <span class="noteCreateDate">- note was created at ${note.createDate}</span><br><br>
+            
+            <span class="noteDescription">${note.noteDescription}</span><br>
+            <button>Read more &#8594;</button><br><br>
+            
+            <div class="noteContent hiddenContent">
+                ${note.noteContent}<br>
+                <button id="${note.noteId}">Edit</button>
+            </div>`;
+
+            noteWrapper.appendChild(noteCard);
 
         })
 
         notesList.innerHTML = '';
-        notesList.appendChild(ul);
+        notesList.appendChild(noteWrapper);
     })
 }
 
