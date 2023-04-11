@@ -17,6 +17,7 @@ let noteHeading = document.getElementById('noteHeading');
 let noteDescription = document.getElementById('noteDescription');
 let noteContent = document.getElementById('noteContent');
 let noteResult = document.getElementById('noteResult');
+let notesList = document.getElementById('notesList');
 
 
 document.getElementById('saveNoteBtn').addEventListener('click', addNote)
@@ -42,3 +43,27 @@ function addNote() {
     })
 
 }
+
+function printNotesList() {
+
+    fetch('http://localhost:3000/notes/')
+    .then(res => res.json())
+    .then(data => {
+        console.log('notes from DB', data);
+
+        let ul = document.createElement('ul');
+
+        data.map(note => {
+            let li = document.createElement('li');
+            li.innerText = `${note.noteHeading} - was created at ${note.createDate} ${note.noteDescription} ${note.noteContent}`;
+
+            ul.appendChild(li);
+
+        })
+
+        notesList.innerHTML = '';
+        notesList.appendChild(ul);
+    })
+}
+
+printNotesList();
