@@ -1,5 +1,3 @@
-console.log('hello world');
-
 tinymce.init({
     selector: "#noteContent",
     plugins: 'code',
@@ -12,6 +10,47 @@ tinymce.init({
     }
 })
 
+function init() {
+
+    const loginFormDiv = document.getElementById('login');
+    const userNameInput = document.createElement('input');
+    const userPasswordInput = document.createElement('input');
+    const loginUserBtn = document.createElement('button');
+
+    userNameInput.placeholder = 'Username';
+    userNameInput.setAttribute('id', 'userNameInput');
+    userPasswordInput.placeholder = 'Password';
+    userPasswordInput.setAttribute('id', 'userPasswordInput');
+    loginUserBtn.innerText = 'Log in';
+    
+    loginFormDiv.append(userNameInput, userPasswordInput, loginUserBtn);
+
+    loginUserBtn.addEventListener('click', loginUser)
+}
+
+function loginUser() {
+    console.log('click');
+
+    const loginUserName = document.getElementById('userNameInput');
+    const loginUserPassword = document.getElementById('userPasswordInput');
+
+    let userLogin = {
+        userName: loginUserName.value,
+        userPassword: loginUserPassword.value
+    }
+
+    fetch('http://localhost:3000/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userLogin)
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('result', data);
+    })
+}
 
 let noteHeading = document.getElementById('noteHeading');
 let noteDescription = document.getElementById('noteDescription');
@@ -82,4 +121,5 @@ function printNotesList() {
     })
 }
 
+init();
 printNotesList();
