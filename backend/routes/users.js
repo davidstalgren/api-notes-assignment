@@ -10,6 +10,7 @@ router.post('/login', (req, res) => {
 
   connection.connect((err) => {
     if (err) {
+
       console.log(err);
     } else {
 
@@ -23,10 +24,33 @@ router.post('/login', (req, res) => {
 
       connection.query(sql, (err, data) => {
         if (err) {
+
           console.log(err);
         } else {
-          console.log('userdata from query', data);
-          res.json(data);
+
+          if (data.length > 0) {
+
+            if (data[0].userPassword == newUserLogin.userPassword) {
+
+              res.status(200).json({ 
+                message: 'Login successfull',
+                access: true,
+                user: data[0].userName, 
+                id: data[0].userId })
+              } else {
+
+                res.status(401).json({ 
+                  message: 'Invalid email or password',
+                  access: false
+                });
+              }
+            } else {
+              
+              res.status(401).json({ 
+                message: 'Invalid email or password',
+                access: false 
+              });
+            }
         }
       })
     }
