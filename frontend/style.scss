@@ -2,6 +2,7 @@
 
 @import 'normalize';
 
+
 body {
     background-color: var.$almostBlack;
     color: var.$offWhite;
@@ -31,15 +32,15 @@ body {
     border-bottom-right-radius: 5rem;
     border-bottom-left-radius: 5rem;
     width: 350px;
-
+    
     .noteHeading {
         margin-bottom: 0px;
     }
-
+    
     .noteCreateDate {
         font-size: 0.8rem;
     }
-
+    
     .noteDescription {
         
     }
@@ -47,8 +48,11 @@ body {
     .noteContent {
         
     }
-
+    
     .hiddenContent {
-        display: none;
     }
+}
+
+.errorMessage {
+    color: var.$errorMessage;
 }
