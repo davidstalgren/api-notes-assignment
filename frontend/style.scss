@@ -56,3 +56,17 @@ body {
 .errorMessage {
     color: var.$errorMessage;
 }
+
+button {
+    background-color: var.$almostBlack;
+    color: var.$offWhite;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-color: var.$offWhite;
+    border-radius: 0.35rem;
+    transition: ease-in-out all 0.5s;
+
+    &:hover {
+        border-color: var.$hoverBlue;
+    }
+}
