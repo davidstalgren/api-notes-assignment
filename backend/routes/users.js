@@ -40,14 +40,14 @@ router.post('/login', (req, res) => {
               } else {
 
                 res.status(401).json({ 
-                  message: 'Invalid email or password',
+                  message: 'Invalid username or password',
                   access: false
                 });
               }
             } else {
               
               res.status(401).json({ 
-                message: 'Invalid email or password',
+                message: 'Invalid username or password',
                 access: false 
               });
             }
