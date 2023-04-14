@@ -75,14 +75,13 @@ function printCreateNoteForm() {
     let noteForm = document.getElementById('noteForm');
 
     noteForm.innerHTML = `
+        <hr width=100%>
         <span>Heading:</span><input type="text" id="noteHeading"><br>
         <span>Description:</span><input type="text" id="noteDescription"><br>
         <span>Content:</span><textarea id="noteContent"></textarea>
-        <button id="addNewNoteBtn">Add new note</button><br>
-        <button id="saveChangesToNoteBtn">Save changes</button>`;
+        <button id="addNewNoteBtn">Add new note</button><hr width=100%>`;
 
     document.getElementById('addNewNoteBtn').addEventListener('click', addNote);
-    document.getElementById('saveChangesToNoteBtn').addEventListener('click', changeNote);
 
     tinymce.init({
         selector: "#noteContent",
@@ -98,31 +97,6 @@ function printCreateNoteForm() {
 }
 
 function addNote() {
-    
-    let noteHeading = document.getElementById('noteHeading');
-    let noteDescription = document.getElementById('noteDescription');
-    let noteContent = document.getElementById('noteContent');
-
-    fetch('http://localhost:3000/notes', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            newNoteHeading: noteHeading.value,
-            newNoteDescription: noteDescription.value,
-            newNoteContent: noteContent.value
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log('create note', data);
-    })
-
-    printNotesList();
-}
-
-function changeNote() {
     
     let noteHeading = document.getElementById('noteHeading');
     let noteDescription = document.getElementById('noteDescription');
@@ -207,11 +181,13 @@ function getEditNote(e) {
         
         noteForm.innerHTML = '';
         noteForm.innerHTML = `
+        <hr width=100%>
         <span>Heading:</span><input type="text" id="noteHeading"><br>
         <span>Description:</span><input type="text" id="noteDescription"><br>
         <span>Content:</span><textarea id="noteContent"></textarea>
-        <button id="addNewNoteBtn">Add new note</button><br>
-        <button id="saveChangesToNoteBtn">Save changes</button>`;
+        <button id="addNewNoteBtn">Add as a new note</button>
+        <span>or:</span>
+        <button id="${noteToEdit}">Save changes</button><hr width=100%>`;
         
         let noteHeading = document.getElementById('noteHeading');
         let noteDescription = document.getElementById('noteDescription');
@@ -222,7 +198,7 @@ function getEditNote(e) {
         noteContent.value = data[0].noteContent;
 
         document.getElementById('addNewNoteBtn').addEventListener('click', addNote);
-        document.getElementById('saveChangesToNoteBtn').addEventListener('click', changeNote);
+        document.getElementById(noteToEdit).addEventListener('click', changeNote);
 
         tinymce.init({
             selector: "#noteContent",
@@ -238,6 +214,35 @@ function getEditNote(e) {
     })
 
     console.log(noteToEdit);
+}
+
+function changeNote(e) {
+    
+    let noteToEdit = e.srcElement.id;
+
+    console.log('click on save change btn', noteToEdit);
+
+    let noteHeading = document.getElementById('noteHeading');
+    let noteDescription = document.getElementById('noteDescription');
+    let noteContent = document.getElementById('noteContent');
+
+    fetch('http://localhost:3000/notes/update/' + noteToEdit, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            editedNoteHeading: noteHeading.value,
+            editedNoteDescription: noteDescription.value,
+            editedNoteContent: noteContent.value
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log('update note', data);
+    })
+
+    printNotesList();
 }
 
 init();
