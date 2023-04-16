@@ -145,8 +145,7 @@ function printNotesList() {
             <span class="noteCreateDate">- note was created at ${note.createDate}</span><br><br>
             
             <span class="noteDescription">${note.noteDescription}</span><br>
-            <button>Read more &#8594;</button><br><br>
-            
+                        
             <div class="noteContent hiddenContent">
                 ${note.noteContent}<br>
                 <button class="editNoteBtn" id="${note.noteId}">Edit</button>
