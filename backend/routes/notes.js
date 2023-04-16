@@ -48,9 +48,17 @@ router.post('/', (req, res) => {
       console.log(err);
     } else {
 
-      let sql = `INSERT INTO notes (noteHeading, noteDescription, noteContent) VALUES ('${newNote.newNoteHeading}', '${newNote.newNoteDescription}', '${newNote.newNoteContent}')`;
+      let sql = `INSERT INTO notes 
+        (noteHeading, noteDescription, noteContent) 
+        VALUES (?, ?, ?)`;
+      
+      let values = [
+        newNote.newNoteHeading, 
+        newNote.newNoteDescription, 
+        newNote.newNoteContent
+      ];
 
-      connection.query(sql, (err, data) => {
+      connection.query(sql, values, (err, data) => {
         if (err) {
           console.log(err);
         } else {
@@ -72,12 +80,19 @@ router.post('/update/:id', (req, res) => {
     } else {
 
       let sql = `UPDATE notes SET 
-      noteHeading = '${editedNote.editedNoteHeading}',
-      noteDescription = '${editedNote.editedNoteDescription}',
-      noteContent = '${editedNote.editedNoteContent}'
-      WHERE noteId = ${req.params.id}`;
+        noteHeading = ?,
+        noteDescription = ?,
+        noteContent = ?
+        WHERE noteId = ?`;
+    
+      let values = [
+        editedNote.editedNoteHeading, 
+        editedNote.editedNoteDescription, 
+        editedNote.editedNoteContent, 
+        req.params.id
+      ];
 
-      connection.query(sql, (err, data) => {
+      connection.query(sql, values, (err, data) => {
         if (err) {
           console.log(err);
         } else {
